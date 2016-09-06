@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<route>
+  <room id="1" name="Stairway"/>
+  <room id="2" name="Hallway 1">
+    <object name="Umbrella"/>
+  </room>
+  <room id="3" name="Hallway 2"/>
+  <room id="5" name="Kitchen">
+    <object name="Knife"/>
+  </room>
+</route>
