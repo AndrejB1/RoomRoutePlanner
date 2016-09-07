@@ -1,22 +1,31 @@
 package com.andrej;
 
 import org.w3c.dom.*;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
+
+import static java.util.logging.Level.WARNING;
 
 /*
  * This class handles all XML related input and output.
  */
 class XMLParser {
+
+    // Logging setup for keeping track of exceptions
+    private static LogManager lm = LogManager.getLogManager();
+    private static Logger logger = lm.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     // Method for reading and parsing an XML file.
     static HashMap<Integer, Room> readFromXMLFile(String filename){
@@ -25,6 +34,8 @@ class XMLParser {
 
         File inputFile = new File(filename);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+
+
 
         try {
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -92,8 +103,12 @@ class XMLParser {
                     roomMap.put(id, room);
                 }
             }
-        } catch (Exception e) {
+        } catch (SAXException e) {
             e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            logger.log(WARNING, "There was an error while parsing the file", e);
+        } catch (IOException e) {
+            logger.log(WARNING, "There was an error while reading from the file", e);
         }
         return roomMap;
     }
@@ -141,8 +156,12 @@ class XMLParser {
             transformer.transform(source, result);
 
             System.out.println("File saved!");
-        }catch (Exception e){
+        } catch (TransformerConfigurationException e) {
             e.printStackTrace();
+        } catch (TransformerException e) {
+            logger.log(WARNING, "There was an error while transforming the data into an XML format.", e);
+        } catch (ParserConfigurationException e) {
+            logger.log(WARNING, "Parser configuration error", e);
         }
     }
 }

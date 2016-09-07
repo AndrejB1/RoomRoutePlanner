@@ -2,10 +2,10 @@
 <route>
   <room id="1" name="Stairway"/>
   <room id="2" name="Hallway 1">
-    <object name="Umbrella"/>
+    <object name="Scarf"/>
   </room>
   <room id="3" name="Hallway 2"/>
-  <room id="5" name="Kitchen">
-    <object name="Knife"/>
+  <room id="6" name="Bath Room">
+    <object name="Soap"/>
   </room>
 </route>

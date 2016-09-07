@@ -1,14 +1,11 @@
 package com.andrej;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 
 public class Main {
 
     // HashMap to contain all the rooms collected from the XML file, using ids as map keys.
-    private static HashMap<Integer, Room> roomMap;
+    static HashMap<Integer, Room> roomMap;
 
     // The Map which will collect the name and id of each room the program goes through.
     static LinkedHashMap<Integer, String> roomRoute = new LinkedHashMap<>();
@@ -47,7 +44,7 @@ public class Main {
      * The route determined by this program will never enter the same room twice, unless
      * the room in question is the only exit out of another room.
      */
-    private static void findRoute(int startingRoom, List<String> requiredObjects){
+    public static void findRoute(int startingRoom, List<String> requiredObjects){
 
         int currentRoom = startingRoom;
 
@@ -182,6 +179,38 @@ public class Main {
             }
             //----------------------------------------------------------------
 
+            /*
+             * NOTE:
+             *
+             * The following is a potential fail safe operation in the case that we are
+             * using a larger room map, and somehow the program gets stuck in a room with
+             * more than one exit, and all exits have been 'visited' before.
+             *
+             * This will never happen with the current map, so I have left it commented out
+             * to improve performance. However, if a larger, custom map was used instead
+             * of the current one, this operation could possibly be necessary.
+             * -----------------------------------------------------------------------------
+             *
+             *   if(visitedRooms.containsAll(room.getExits().values())){
+             *
+             *       visitedRooms.add(currentRoom);
+             *
+             *       // Use a random number to determine which exit to take
+             *       Random random = new Random();
+             *       int randomExit = random.nextInt(room.getExits().size()-1);
+             *
+             *       // Get a list of possible room exits.
+             *       List<Integer> exits = (List<Integer>) room.getExits().values();
+             *
+             *       // Randomly pick an exit from the list.
+             *       currentRoom  = exits.get(randomExit);
+             *       System.out.println("Moved to room " + currentRoom);
+             *
+             *       continue parentloop;
+             *   }
+             *
+             * -----------------------------------------------------------------------------
+             */
 
         }
 

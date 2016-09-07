@@ -27,6 +27,7 @@ class ConfigFileReader {
 
             bufferedReader.close();
         } catch (FileNotFoundException e) {
+            System.out.println("Error: The file " + filename + " cannot be found.");
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
